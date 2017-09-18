@@ -1,0 +1,100 @@
+<template>
+	<transition class="myanimation">
+		<div class="login">
+			<span class="close">×</span>
+			<img src="../assets/liulian.com.png" alt="">
+			<p><span>手机</span><input type="text" /></p>
+			<p><span>密码</span><input type="password" /></p>
+			<router-link to="/register" class="reg">注册</router-link>
+			<button>登录</button>
+		</div>
+	</transition>
+</template>
+
+<script>
+export default {
+
+  name: 'login',
+
+  data () {
+    return {
+
+    };
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+	html,body{
+		height:100%;
+	}
+	.login{
+		position: fixed;
+		z-index:101;
+		top:0;
+		left:0;
+		height:100%;
+		width:100%;
+		background: url('../assets/login_bg.jpg') no-repeat ;
+		background-size:100% 100%;	
+
+		.close{
+			position: absolute;
+			top : 0.3rem;
+			left:0.2rem;
+			color:#ccc;
+			font-size:0.5rem;
+		}
+
+		img{
+			margin-top:1.2rem;
+			width:1.5rem;
+		}
+		p{
+			width:85%;
+			margin-left:7.5%;
+			border-bottom:2px solid #fff;
+			height:0.3rem;
+			font-size:0.15rem;
+			line-height: 0.3rem;
+			margin-bottom: 0.2rem;
+			text-align: left;
+			span{
+				border-right:1px solid #fff;
+				padding-right:0.1rem;
+			}
+			input{
+				width:80%;
+				height:90%;
+				margin-left:0.05rem;
+				line-height: 0.3rem;
+				border:0;
+				outline:0;
+				background:none;
+				font-size:0.15rem;
+				text-indent : 0.2rem;
+				color:#fff;
+			}
+		}
+		button{
+			width:80%;
+			height:0.4rem;
+			background:#f00;
+			text-align: center;
+			line-height: 0.4rem;
+			border-radius : 0.05rem;
+			font-size:0.15rem;
+			color:#fff;
+			outline:none;
+			border:0;
+		}
+		.reg{
+			font-size:0.15rem;
+			float: right;
+			position: absolute;
+			right:0.2rem;
+
+		}
+	}
+
+</style>
