@@ -24,6 +24,18 @@
 
 			<div class="list">
 				<p>我的订单 <span>查看全部订单></span></p>
+				<ul>
+					<router-link to="/mine" tag="li">待付款</router-link>
+					<router-link to="/mine" tag="li">待出行</router-link>
+					<router-link to="/mine" tag="li">待评价</router-link>
+					<router-link to="/like" tag="li">退款</router-link>
+				</ul>
+			</div>
+
+			<div class="center">
+				<router-link to="like" tag="p"><p>邀请有礼<span>></span></p></router-link>
+				<router-link to="like" tag="p"><p>常用旅客<span>></span></p></router-link>
+				<router-link to="like" tag="p"><p>个人偏好<span>></span></p></router-link>
 			</div>
 		</div>
 	</div>
@@ -90,7 +102,7 @@ export default {
 		background:#eee;
 		div.pag{
 			width:100%;
-			background:#ff0;
+			background:#fff;
 			height:0.6rem;
 			display:flex;
 			a{
@@ -100,8 +112,13 @@ export default {
 				span{
 					display:block;
 					line-height: 0.3rem;
+					color:#444;
 				}
-				.money{
+				span:nth-of-type(2){
+					color:#999;
+					font-size:0.12rem;
+				}
+				span.money{
 					color:#f00;
 				}
 			}
@@ -123,7 +140,39 @@ export default {
 				span{
 					float: right;
 					margin-right:0.2rem;
+					font-size:0.12rem;
 					color:#999;
+				}
+			}
+			ul{
+				li{
+					width:25%;
+					float:left;
+					list-style: none;
+					line-height: 0.5rem;
+				}
+			}
+		}
+
+		div.center{
+			margin-top:0.1rem;
+			width:100%;
+			background:#fff;
+			p{
+				width:95%;
+				margin-left:2.5%;
+				height:0.4rem;
+				font-size:0.15rem;
+				line-height: 0.4rem;
+				text-indent: 0.1rem;
+				text-align: left;
+				border-bottom:1px solid #ccc;
+				margin-bottom: 0.1rem;
+				span{
+					font-size:0.2rem;
+					float:right;
+					margin-right: 0.05rem;
+					color:#ccc;
 				}
 			}
 		}
