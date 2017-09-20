@@ -20,11 +20,11 @@ export default new Router({
   routes: [
     {
       path: '/home',
-      name: 'aim',
       component: Aim
     },
     {
     	path : '/aim',
+        name : 'aim',
     	component : Aim
     },
     {
@@ -61,6 +61,7 @@ export default new Router({
     },
     {
         path : '/list',
+        name : 'list',
         component: List
     },
     {

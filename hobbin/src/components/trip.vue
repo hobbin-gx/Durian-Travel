@@ -27,7 +27,7 @@ export default {
 
   methods : {
   	hha(){
-  		console.log(222);
+  		// console.log(222);
   	},
   	handleClick(){
   		this.isShow = !this.isShow;

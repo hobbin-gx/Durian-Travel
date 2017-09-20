@@ -9,11 +9,11 @@ var spider = require('../API/api.js');
 // })
 
 router.get('/address',function (req,res){
-    console.log("req.url : " + req.url)
-    console.log("url.parse(req.url).query : " + url.parse(req.url).query);
+    // console.log("req.url : " + req.url)
+    // console.log("url.parse(req.url).query : " + url.parse(req.url).query);
     var str = url.parse(req.url).query;
     var str1 = querystring.parse(str);
-    console.log(str1);
+    // console.log(str1);
     spider('/api/hunter/products/newstyle/v2/?city_name=%E5%8C%97%E4%BA%AC' ,function (data) {
         res.send(data);
     })   
@@ -65,9 +65,22 @@ router.get('/city',function (req,res){
     })   
 });
 
+router.get('/list',function (req,res){
+    // console.log("req.url : " + req.url)
+    console.log("url.parse(req.url).query : " + url.parse(req.url).query);
+    // console.log(req);
+    var str = url.parse(req.url).query;
+    var str1 = querystring.parse(str);
+    // console.log(encodeURI(str1.name));
+    spider('/api/hunter/products/newstyle/product_module/v2/38/?' + url.parse(req.url).query  ,function (data) {
+        res.send(data);
+    })   
+});
 
 
 
+
+// http://api.breadtrip.com/hunter/products/newstyle/product_module/v2/38/?city_name=%E4%B8%8A%E6%B5%B7&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=&start=0&publish_date=
 
 
 
@@ -78,9 +91,9 @@ router.get('/city',function (req,res){
 // http://api.breadtrip.com/hunter/products/newstyle/product_module/v2/38/?city_name=%E4%B8%8A%E6%B5%B7&module_name=%E7%BA%BF%E4%B8%8A%E4%BA%A7%E5%93%81&module_id=-7&lng=&lat=&start=0&publish_date=
 
 
+// url.parse(req.url).query : city_name=%E6%B7%B1%E5%9C%B3&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=
 
-
-
+// url.parse(req.url).query : city_name=%E5%8C%97%E4%BA%AC&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=
 
 
 
@@ -105,3 +118,9 @@ module.exports = router;
 // http://m.breadtrip.com/api/hunter/products/newstyle/v2/?city_name=%E4%B8%8A%E6%B5%B7  %e5%8c%97%e4%ba%ac
 // http://m.breadtrip.com/api/hunter/products/newstyle/v2/?city_name=%E5%8C%97%E4%BA%AC
 // http://m.breadtrip.com/api/hunter/products/newstyle/v2/?city_name=%E6%B7%B1%E5%9C%B3
+
+
+// url.parse(req.url).query : city_name=%E5%8C%97%E4%BA%AC&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=
+// url.parse(req.url).query : city_name=%E4%B8%8A%E6%B5%B7&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=
+// http://api.breadtrip.com/hunter/products/newstyle/product_module/v2/30/?city_name=%E5%8C%97%E4%BA%AC&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=&start=0&publish_date=
+// http://api.breadtrip.com/hunter/products/newstyle/product_module/v2/38/?city_name=%E4%B8%8A%E6%B5%B7&module_name=%E5%9F%8E%E5%B8%82%E6%8E%A2%E7%B4%A2&module_id=67&lng=&lat=&start=0&publish_date=

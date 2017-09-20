@@ -90,10 +90,10 @@ export default {
   	 bus.$on('address',(add)=>{
 			this.address = encodeURI(add);
 			axios.get('/api/city?name=' + this.address).then(res=>{
-				console.log(res.data);
+				// console.log(res.data);
 				this.pic_list = res.data.data.elements[2].items;
   				this.theme_list = res.data.data.elements.splice(0,2).concat(res.data.data.elements.splice(1));
-  				console.log(this.theme_list);
+  				// console.log(this.theme_list);
   				this.address_list = res.data;
 
 

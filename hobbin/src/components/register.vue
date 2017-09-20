@@ -3,10 +3,10 @@
 		<div class="regist">
 			<span class="close">×</span>
 			<img src="../assets/liulian.com.png" alt="">
-			<p><span>手机</span><input type="text" /></p>
+			<p><span>手机</span><input type="text" v-on:input="handleInput"/></p>
 			<p><span>密码</span><input type="password" /></p>
 			<router-link to="/login" class="log">直接登录</router-link>
-			<button>注册</button>
+			<button @click = 'handle'>注册</button>
 		</div>
 	</transition>
 </template>
@@ -20,6 +20,53 @@ export default {
     return {
 
     };
+  },
+
+  methods : {
+  		handleInput(el){
+  			console.log(el.path['0'].value);
+  		},
+
+		handle(){
+			console.log();
+			console.log(this.state.password);
+			// var userRegex = /^1[3,4,5,7,8]\d{9}$/;
+			// var pwRegex = /^[a-zA-Z][A-Za-z0-9_]{5,16}$/;
+			// if(this.state.phonenumber==''){
+			// 		this.setState({
+			// 			unameHelp: "用户不能为空"
+			// 		})
+			// }else{
+			// 	if(!userRegex.test(this.state.phonenumber)){
+			// 		this.setState({
+			// 			unameHelp:"请输入正确的11位电话号"
+			// 		})
+
+			// 	}else{
+			// 		this.setState({
+			// 			unameHelp:""
+			// 		})
+
+			// 	}
+			// }
+			// if(this.state.password==''){
+			// 	this.setState({
+			// 			upwdHelp: "密码不能为空"
+			// 		})
+			// }else{
+			// 	if(!pwRegex.test(this.state.password)){
+			// 		this.setState({
+			// 			upwdHelp: "请输入一个首字母为英文的6-17位的密码"
+			// 		})
+			// 	}else{
+			// 		this.setState({
+			// 			upwdHelp: ""
+			// 		})
+			// 	}
+			// }
+		}
+
+
   }
 };
 </script>
