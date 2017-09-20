@@ -51,6 +51,22 @@ router.get('/routs',function (req,res){
         res.send(data);
     })   
 });
+
+
+router.get('/city',function (req,res){
+    console.log("req.url : " + req.url)
+    console.log("url.parse(req.url).query : " + url.parse(req.url).query);
+    var str = url.parse(req.url).query;
+    var str1 = querystring.parse(str);
+    console.log(encodeURI(str1.name));
+    spider('/api/hunter/products/newstyle/v2/?city_name=' + encodeURI(str1.name)  ,function (data) {
+        res.send(data);
+    })   
+});
+
+// http://m.breadtrip.com/api/hunter/products/newstyle/v2/?city_name=%E5%8C%97%E4%BA%AC
+// http://m.breadtrip.com/api/hunter/search/index/?city_name=%E5%8C%97%E4%BA%AC
+
 // http://m.breadtrip.com/api/hunter/search/index/?city_name=%E5%85%A8%E9%83%A8%E5%9F%8E%E5%B8%82
 
 // http://m.breadtrip.com/api/hunter/products/newstyle/v2/?city_name=%E5%85%A8%E9%83%A8%E5%9F%8E%E5%B8%82

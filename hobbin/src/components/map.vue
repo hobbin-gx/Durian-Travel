@@ -8,6 +8,7 @@
 
 import Vue from 'vue';
 import bus from '../bus.js';
+import axios from 'axios';
 
 export default {
 
@@ -28,11 +29,11 @@ export default {
   },
 
   mounted () {
-
   	bus.$on('address',(add)=>{
   			this.add = add;
   	})
   }
+
 };
 </script>
 

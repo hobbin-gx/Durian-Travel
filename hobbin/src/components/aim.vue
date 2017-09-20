@@ -21,7 +21,7 @@
 				<ul class="inter">
 				<li v-for="rout in routs_list">
 					<img v-bind:src='rout.cover' />
-					<span>rout.name</span>
+					<span>{{rout.name}}</span>
 				</li>
 				
 			</ul>
@@ -30,10 +30,6 @@
 		</div>
 
 		<search :theme_list= "theme_list"></search>
-
-
-
-
 	
 		<div class="over">
 			<p>别扯了，已经到底了~</p>
@@ -54,6 +50,7 @@ import '@/assets/iconfont/iconfont.css'
 import Search from '@/components/search'
 import axios from 'axios';
 import '@/assets/iconfont/iconfont.css'
+import bus from '../bus.js';
 
 
 
@@ -109,7 +106,18 @@ export default {
   		// console.log(res.data.data.product_tabs);
   		this.routs_list = res.data.data.product_tabs;
   	})
+
+  },
+
+  beforeMount () {
+	  	bus.$on('address',(add)=>{
+			var address = encodeURI(add);
+			axios.get('/api/city?name=' + address).then(res=>{
+				console.log(res.data);
+			})
+		})
   }
+
 
 };
 </script>
