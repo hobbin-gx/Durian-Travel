@@ -3,11 +3,10 @@
 		<selectAim v-model="isShow" :hot_city_list="hot_city_list" :all_city_list="all_city_list"></selectAim>
 		<swipe class='my-swipe' >
 			<swipe-item v-for="pic in pic_list">
-			<img v-bind:src="pic.img_url"  alt="">
+			<img :src="pic.img_url"  alt="">
 			</swipe-item>
 		</swipe>
-		<ad class='mymap' v-model="isShow" v-bind="address"></ad>
-		<h1>{{address}}</h1>
+		<ad class='mymap' v-model="isShow"></ad>
 		<ul>
 			<router-link tag="li" to="/list" v-for="theme in theme_list">
 					<span>{{theme.title}}</span>
@@ -15,19 +14,6 @@
 			
 		</ul>
 		<gezi></gezi>
-		<div class="hotroot">
-			<p>热门路线 <i class="iconfont">&#xe6a7;</i></p>
-			<div class="intersting" @click = "handleClick">
-				<ul class="inter">
-				<li v-for="rout in routs_list">
-					<img v-bind:src='rout.cover' />
-					<span>{{rout.name}}</span>
-				</li>
-				
-			</ul>
-			</div>
-			
-		</div>
 
 		<search :theme_list= "theme_list"></search>
 	
@@ -59,8 +45,6 @@ export default {
 
   name: 'aim',
 
-  props : ['address','dizhi'],
-
   data () {
     return {
     	isShow : false,
@@ -68,7 +52,8 @@ export default {
     	all_city_list : [],
     	pic_list : [],
     	theme_list : [],
-    	routs_list : []
+    	routs_list : [],
+    	address_list : []
 
     };
   },
@@ -87,36 +72,38 @@ export default {
   },
 
   mounted(){
+
+  	axios.get('/api/address').then(res=>{
+  		this.address_list = res.data;
+  		// console.log(res.data);
+  		this.pic_list = res.data.data.elements[2].items;
+  		this.theme_list = res.data.data.elements.splice(0,2).concat(res.data.data.elements.splice(1));
+  	})
+
   	axios.get('/api/map').then(res=>{
   		// console.log(res.data);
   		this.hot_city_list = res.data.city_data.domestic_city.hot_city_list;
 		this.all_city_list = res.data.city_data.domestic_city.all_city_list;
 		// console.log(this.all_city_list);  		
   	}),
-  	axios.get('/api/pic').then(res=>{
-  		var arr = res.data.data.elements[2];
-  		// console.log(arr.items);
-  		this.pic_list = arr.items;
 
-  		var arr1 = res.data.data.elements.splice(0,2).concat(res.data.data.elements.splice(1));
-  		// console.log(arr1);
-  		this.theme_list = arr1;
-  	}),
-  	axios.get('/api/routs').then(res=>{
-  		// console.log(res.data.data.product_tabs);
-  		this.routs_list = res.data.data.product_tabs;
-  	})
-
-  },
-
-  beforeMount () {
-	  	bus.$on('address',(add)=>{
-			var address = encodeURI(add);
-			axios.get('/api/city?name=' + address).then(res=>{
+  	 bus.$on('address',(add)=>{
+			this.address = encodeURI(add);
+			axios.get('/api/city?name=' + this.address).then(res=>{
 				console.log(res.data);
+				this.pic_list = res.data.data.elements[2].items;
+  				this.theme_list = res.data.data.elements.splice(0,2).concat(res.data.data.elements.splice(1));
+  				console.log(this.theme_list);
+  				this.address_list = res.data;
+
+
 			})
 		})
-  }
+  	}
+
+  // update () {
+	 
+  // }
 
 
 };
@@ -141,7 +128,7 @@ export default {
 
 	ul{
 		width:100%;
-		height:0.8rem;
+		overflow: hidden;
 		li{
 			width:33%;
 			height:0.3rem;
@@ -158,55 +145,7 @@ export default {
 		}
 	}
 
-	div.hotroot{
-		width:100%;
-		height:3rem;
-		overflow: scroll;
-
-		p{
-			height:0.5rem;
-			width:100%;
-			line-height: 0.5rem;
-			font-size:.15rem;
-			i{
-				font-size:0.1rem;
-			}
-		}
-		div.intersting::-webkit-scrollbar{
-			display:none;
-		}
-		div.intersting{
-			height:2.5rem;
-			width:100%;
-			overflow:scroll;
-			ul{
-			height:2.5rem;
-			width:40rem;
-			li{
-				height:100%;
-				width:3rem;
-				float:left;
-				margin-top:0;
-				margin-left:0.2rem;
-				margin-right:0.2rem;
-				img{
-					display:block;
-					height:2.1rem;
-					width:100%;
-				}
-				span{
-					display:block;
-					width:100%;
-					height:0.4rem;
-					line-height: 0.4rem;
-					font-size:0.2rem;
-				}
-			}
-		}
-		}
-		
-	}
-
+	
 	div.over{
 		width:100%;
 		height:0.4rem;

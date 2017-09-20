@@ -19,7 +19,7 @@ export default {
 
   data () {
     return {               
-    	add:'map'
+    	add:'北京'
     };
   },
   methods : {
