@@ -1,119 +1,116 @@
 <template>
-	<div>
+	<div class="all">
+		<selectAim v-model="isShow" :hot_city_list="hot_city_list" :all_city_list="all_city_list"></selectAim>
 		<swipe class='my-swipe' >
-			<swipe-item>
-				<img src="../assets/img1.jpg" alt="">	
-			</swipe-item>
-			<swipe-item>
-				<img src="../assets/img2.jpg" alt="">		
-			</swipe-item>
-			<swipe-item>
-				<img src="../assets/img3.jpg" alt="">		
-			</swipe-item>
-			<swipe-item>
-				<img src="../assets/img4.jpg" alt="">		
+			<swipe-item v-for="pic in pic_list">
+			<img v-bind:src="pic.img_url"  alt="">
 			</swipe-item>
 		</swipe>
-		<ad class='mymap' v-model="isShow"></ad>
-		<selectAim v-model="isShow"></selectAim>
+		<ad class='mymap' v-model="isShow" v-bind="address"></ad>
+		<h1>{{address}}</h1>
 		<ul>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe696;</i>
-				<span>特色玩法</span>
+			<router-link tag="li" to="/list" v-for="theme in theme_list">
+					<span>{{theme.title}}</span>
 			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe6ba;</i>
-				<span>诚意美食</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe722;</i>
-				<span>精选之宿</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe6e9;</i>
-				<span>绝美风光</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe6ce;</i>
-				<span>多日游</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe6c7;</i>
-				<span>一日游</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe6f2;</i>
-				<span>便捷交通</span>
-			</router-link>
-			<router-link tag="li" to="/like">
-				<i class="iconfont">&#xe707;</i>
-				<span>地道特产</span>
-			</router-link>
+			
 		</ul>
 		<gezi></gezi>
 		<div class="hotroot">
-			<p>热门路线</p>
-			<div class="intersting">
+			<p>热门路线 <i class="iconfont">&#xe6a7;</i></p>
+			<div class="intersting" @click = "handleClick">
 				<ul class="inter">
-				<li>
-					<img src='../assets/img1.jpg' />
-					<span>厦门·3天2晚 在小清新之地遇见大海</span>
+				<li v-for="rout in routs_list">
+					<img v-bind:src='rout.cover' />
+					<span>rout.name</span>
 				</li>
-				<li>
-					<img src='../assets/img2.jpg' />
-					<span>厦门·3天2晚 在小清新之地遇见大海</span>
-				</li>
-				<li>
-					<img src='../assets/img3.jpg' />
-					<span>厦门·3天2晚 在小清新之地遇见大海</span>
-				</li>
-				<li>
-					<img src='../assets/img4.jpg' />
-					<span>厦门·3天2晚 在小清新之地遇见大海</span>
-				</li>
-				<li>
-					<img src='../assets/img1.jpg' />
-					<span>厦门·3天2晚 在小清新之地遇见大海</span>
-				</li>
+				
 			</ul>
 			</div>
 			
 		</div>
-		<gezi></gezi>
+
+		<search :theme_list= "theme_list"></search>
+
+
+
+
+	
+		<div class="over">
+			<p>别扯了，已经到底了~</p>
+		</div>
 
 
 	</div>
 </template>
 
 <script>
+import router from '../router';
 import {Swipe,SwipeItem} from 'vue-swipe';
 import 'vue-swipe/dist/vue-swipe.css';
 import ad from '@/components/map';
 import SelectAim from '@/components/selectAim'
 import Vue from 'vue'
 import '@/assets/iconfont/iconfont.css'
+import Search from '@/components/search'
+import axios from 'axios';
+import '@/assets/iconfont/iconfont.css'
 
-Vue.component('gezi',{
-	template : `
-	<div class="gezi"></div>
-	`
-})
+
+
 
 export default {
 
   name: 'aim',
 
+  props : ['address','dizhi'],
+
   data () {
     return {
-    	isShow : false
+    	isShow : false,
+    	hot_city_list : [],
+    	all_city_list : [],
+    	pic_list : [],
+    	theme_list : [],
+    	routs_list : []
+
     };
   },
   components : {
   	'swipe': Swipe,
   	'swipe-item' : SwipeItem,
   	'ad' : ad,
-  	'selectAim' : SelectAim
+  	'selectAim' : SelectAim,
+  	'search' : Search
+  },
+
+  methods: {
+	  handleClick () {
+	  		router.push('/list');
+	  }
+  },
+
+  mounted(){
+  	axios.get('/api/map').then(res=>{
+  		// console.log(res.data);
+  		this.hot_city_list = res.data.city_data.domestic_city.hot_city_list;
+		this.all_city_list = res.data.city_data.domestic_city.all_city_list;
+		// console.log(this.all_city_list);  		
+  	}),
+  	axios.get('/api/pic').then(res=>{
+  		var arr = res.data.data.elements[2];
+  		// console.log(arr.items);
+  		this.pic_list = arr.items;
+
+  		var arr1 = res.data.data.elements.splice(0,2).concat(res.data.data.elements.splice(1));
+  		// console.log(arr1);
+  		this.theme_list = arr1;
+  	}),
+  	axios.get('/api/routs').then(res=>{
+  		// console.log(res.data.data.product_tabs);
+  		this.routs_list = res.data.data.product_tabs;
+  	})
   }
+
 };
 </script>
 
@@ -122,6 +119,10 @@ export default {
 		padding:0;
 		margin:0;
 	}
+	.all{
+		margin-bottom: 0.5rem;
+		position: relative;
+	}
 	.my-swipe{
 		height: 2.0rem;
 		img{
@@ -129,29 +130,21 @@ export default {
 			height:100%;
 		}
 	}
-	.gezi{
-		width:100%;
-		height:0.12rem;
-		background:#ddd;
-		margin-top: 0.05rem;
-	}
+
 	ul{
 		width:100%;
-		height:1.2rem;
+		height:0.8rem;
 		li{
-			width:25%;
-			height:0.5rem;
+			width:33%;
+			height:0.3rem;
 			list-style: none;
 			text-align: center;
 			font-size:0.16rem;
 			margin-top:0.1rem;
 			float: left;
-			i{
-				display: block;
-				line-height:0.25rem;
-			}
+
 			span{
-				line-height: 0.25rem;
+				line-height: 0.3rem;
 				font-size:0.12rem;
 			}
 		}
@@ -167,6 +160,9 @@ export default {
 			width:100%;
 			line-height: 0.5rem;
 			font-size:.15rem;
+			i{
+				font-size:0.1rem;
+			}
 		}
 		div.intersting::-webkit-scrollbar{
 			display:none;
@@ -177,7 +173,7 @@ export default {
 			overflow:scroll;
 			ul{
 			height:2.5rem;
-			width:17rem;
+			width:40rem;
 			li{
 				height:100%;
 				width:3rem;
@@ -195,12 +191,28 @@ export default {
 					width:100%;
 					height:0.4rem;
 					line-height: 0.4rem;
-					font-size:0.12rem;
+					font-size:0.2rem;
 				}
 			}
 		}
 		}
 		
 	}
-	
+
+	div.over{
+		width:100%;
+		height:0.4rem;
+		margin-top: 0.2rem;
+		border-top: 1px solid #ccc;
+		p{
+			width:100%;
+			height:100%;
+			background:#ddd;
+			font-size:0.15rem;
+			line-height: 0.4rem;
+			color:#666;
+		}
+	}
+
+
 </style>

@@ -9,6 +9,8 @@ import SelectAim from '@/components/selectAim'
 import Login from '@/components/login'
 import Register from '@/components/register'
 import HistoryTrip from '@/components/historytrip'
+import List from '@/components/list'
+import Details from '@/components/details'
 
 
 Vue.use(Router)
@@ -18,8 +20,8 @@ export default new Router({
   routes: [
     {
       path: '/home',
-      name: 'home',
-      component: Home
+      name: 'aim',
+      component: Aim
     },
     {
     	path : '/aim',
@@ -56,6 +58,14 @@ export default new Router({
     {
         path : '/historytrip',
         component : HistoryTrip
+    },
+    {
+        path : '/list',
+        component: List
+    },
+    {
+        path : '/details',
+        component : Details
     }
   ]
 })

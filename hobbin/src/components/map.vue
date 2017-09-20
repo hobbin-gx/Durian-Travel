@@ -1,25 +1,37 @@
 <template>
 	<div @click = "handleClick">
-		<b>map</b>
+		<b>{{add}}</b>
 	</div>
 </template>
 
 <script>
+
+import Vue from 'vue';
+import bus from '../bus.js';
+
 export default {
+
 
   name: 'ad',
 
   props : ['value'],
 
   data () {
-    return {
-
+    return {               
+    	add:'map'
     };
   },
   methods : {
   	handleClick(){
   		this.$emit('input',!this.value);
   	}
+  },
+
+  mounted () {
+
+  	bus.$on('address',(add)=>{
+  			this.add = add;
+  	})
   }
 };
 </script>
@@ -31,16 +43,16 @@ export default {
 	}
 	div{
 		height:0.3rem;
-		width:0.6rem;
+		padding:0 0.1rem;
 		background:rgba(255,0,0,0.5);
-		position: fixed;
+		position: absolute;
 		top : 0.1rem;
 		left:0.05rem;
 		color:#fff;
 		font-size:0.15rem;
 		line-height: 0.3rem;
 		border-radius: 0.2rem;
-		z-index: 10;
+		z-index: 200;
 
 	}
 </style>
