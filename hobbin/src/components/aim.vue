@@ -8,9 +8,9 @@
 		</swipe>
 		<ad class='mymap' v-model="isShow"></ad>
 		<ul>
-			<router-link tag="li" to="/list" v-for="theme in theme_list">
-					<span>{{theme.title}}</span>
-			</router-link>
+			<li v-for="v in theme_list" v-show=v.more_url>
+					<span @click = "clickInto(v.more_url)">{{v.title}}</span>
+			</li>
 			
 		</ul>
 		<gezi></gezi>
@@ -68,7 +68,19 @@ export default {
   methods: {
 	  handleClick () {
 	  		router.push('/list');
-	  }
+	  },
+
+	  clickInto (str) {
+  		var index = str.indexOf('com');
+  		var str1 = str.substring(index + 4);
+  		// console.log('++++++++++++++++++++');
+
+  		if(str1){
+  			// console.log(1111);
+	  		router.push(`/list/${str1}`);
+  		
+  		}
+  	}
   },
 
   mounted(){

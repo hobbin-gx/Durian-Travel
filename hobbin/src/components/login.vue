@@ -1,26 +1,101 @@
 <template>
-	<transition class="myanimation">
-		<div class="login">
-			<span class="close">×</span>
+	<transition name="myanimation">
+		<div class="login" v-show="value">
+			<span class="close" @click="handleClick">×</span>
 			<img src="../assets/liulian.com.png" alt="">
-			<p><span>手机</span><input type="text" /></p>
-			<p><span>密码</span><input type="password" /></p>
+			<p><span>手机</span><input type="text" v-on:input="usernameInput"/></p>
+			<p><span>密码</span><input type="password" v-on:input="passwordInput"/></p>
 			<router-link to="/register" class="reg">注册</router-link>
-			<button>登录</button>
+			<button @click = 'handle'>登录</button>
 		</div>
 	</transition>
 </template>
 
 <script>
+
+import router from '../router'
+import axios from 'axios'
+
 export default {
 
   name: 'login',
 
+  props : ['value'],
+
   data () {
     return {
-
+    	username : '',
+    	password : '',
+    	userisok : false,
+    	pwisok : false,
+    	unameHelp : '',
+    	upwdHelp : ''
     };
-  }
+  },
+
+  methods : {
+
+  		handleClick(){
+  			this.$emit('input',false);
+  		},
+
+  		usernameInput(el){
+  			// console.log(el.path['0'].value);
+  			this.username = el.path['0'].value;
+  		},
+
+  		passwordInput(el){
+  			this.password = el.path['0'].value;
+  		},
+
+
+
+		handle(){
+		var userRegex = /^1[3,4,5,7,8]\d{9}$/;;
+		var pwRegex = /^[a-zA-Z][A-Za-z0-9_]{5,16}$/;
+		if(this.username==''){
+				this.unameHelp = '用户不能为空';
+		}else{
+			if(!userRegex.test(this.username)){
+				this.unameHelp = '请输入正确的11位电话号'
+			}else{
+				this.unameHelp ='';
+
+			}
+		}
+		if(this.password==''){
+			alert({
+					upwdHelp: "密码不能为空"
+				})
+		}else{
+			if(!pwRegex.test(this.password)){
+				alert({
+					upwdHelp: "请输入一个首字母为英文的6-17位的密码"
+				})
+			}else{
+				this.upwdHelp = '';
+
+			}
+		}
+		axios.post("/api/login",{
+			name:this.username,
+			password:this.password
+		}).then(res=>{console.log(res);
+			if(this.unameHelp==''&&this.upwdHelp==''){
+				sessionStorage.setItem('name', this.username);
+				router.push('/aim')
+			}
+		}).catch(error=>{console.log(error);
+					console.log({
+							errorMessage:error
+						})
+					if(this.unameHelp==''&&this.upwdHelp==''&&!this.errorMessage==''){
+						alert("账户不存或账户、密码错误")
+					}
+				}
+			)
+		}
+  	}
 };
 </script>
 
@@ -96,5 +171,28 @@ export default {
 
 		}
 	}
+
+
+    .myanimation-enter-active{
+       animation: trans .600s 1 ;
+    }
+
+    .myanimation-leave-active{
+    	animation: trans .600s 1 reverse;
+    }
+
+    @keyframes trans {
+    	from{
+          transform :translateY(100%);
+          opacity: 0;
+    	}
+
+    	to{
+   			transform :translateY(0);
+   			opacity: 1;
+    	}
+    }
+
+   
 
 </style>

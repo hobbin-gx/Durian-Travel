@@ -1,6 +1,6 @@
 <template>
 	<div class="all">
-		<p class="top"><span> < </span> <b>❤</b></p>
+		<p class="top"><span @click="leave"> < </span> <b>❤</b></p>
 		<swipe class='my-swipe' >
 			<swipe-item>
 				<img src="../assets/img1.jpg" alt="">	
@@ -44,22 +44,58 @@
 
 import {Swipe,SwipeItem} from 'vue-swipe';
 import 'vue-swipe/dist/vue-swipe.css';
-
+import axios from 'axios';
+import router from '../router'
 export default {
+
+
 
   name: 'details',
 
   data () {
     return {
-
+    	detailslist : []
     };
   },
 
   components: {
   	'swipe': Swipe,
   	'swipe-item' : SwipeItem,
+  },
+
+  methods:{
+  	leave(){
+  		router.go(-1);
+  	}
+  },
+
+  mounted () {
+
+  	// http://web.breadtrip.com/hunter/product/16133/comments/more/?start=0&count=20&public=1
+
+  // 		axios.get(`/api/details/${this.$route.query.testid}?__t=1505289765496`).then(res=>{
+  // 		console.log(res.data);
+
+  // 		this.filminfo = res.data.data.film;
+  // 	})
+
+  		var str = this.$route.params[0].substring(1);
+  		console.log(str);
+  		axios.post('/api/details',{
+				str
+		}).then(res=>{
+			console.log(res.data.items);
+			this.detailslist = res.data;
+		})
+
+
+
   }
+
 };
+
+
+
 </script>
 
 <style lang="scss" scoped>

@@ -20,6 +20,7 @@ export default new Router({
   routes: [
     {
       path: '/home',
+      name: 'aim',
       component: Aim
     },
     {
@@ -60,12 +61,13 @@ export default new Router({
         component : HistoryTrip
     },
     {
-        path : '/list',
+        path : '/list/\*',
         name : 'list',
         component: List
     },
     {
-        path : '/details',
+        path : '/details\*',
+        name : 'details',
         component : Details
     }
   ]

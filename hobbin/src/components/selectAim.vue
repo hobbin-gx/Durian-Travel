@@ -36,6 +36,7 @@ export default {
   	search_city(event){
   		//console.log(event.currentTarget.innerHTML);
   		bus.$emit('address',event.currentTarget.innerHTML);
+  		this.$emit('input',false);
   		// console.log(el.html());
   	}
   }
