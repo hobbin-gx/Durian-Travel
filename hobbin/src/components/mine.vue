@@ -46,17 +46,17 @@ export default {
 
   name: 'aim',
 
-  // props:['value'],
+  props:['value'],
 
   data () {
     return {
 
     };
-  }
+  },
 
-  // mounted (){
-  // 	this.$emit('input',false);
-  // }
+  mounted (){
+  	this.$emit('input',false);
+  }
 };
 </script>
 

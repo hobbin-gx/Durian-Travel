@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <underbar></underbar>
-    <login v-model='isShow' v-show = 'isShow'></login>
+    <login v-model='isShow'></login>
     <router-view></router-view>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
 
   data (){
     return {
-      isShow : true
+      isShow : false
     }
   },
 

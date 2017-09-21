@@ -95,7 +95,11 @@ export default {
 				}
 			)
 		}
-  	}
+  	},
+
+  mounted(){
+
+  }
 };
 </script>
 
@@ -105,7 +109,7 @@ export default {
 	}
 	.login{
 		position: fixed;
-		z-index:101;
+		z-index:301;
 		top:0;
 		left:0;
 		height:100%;

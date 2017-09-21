@@ -1,7 +1,7 @@
 <template>
 	<transition class="myanimation">
 		<div class="regist">
-			<span class="close">×</span>
+			<span class="close" @click="handleLeave">×</span>
 			<img src="../assets/liulian.com.png" alt="">
 			<p><span>手机</span><input type="text" v-on:input="usernameInput"/></p>
 			<p><span>密码</span><input type="password" v-on:input="passwordInput" /></p>
@@ -32,6 +32,10 @@ export default {
   },
 
   methods : {
+  		handleLeave(){
+  			router.go(-1);
+  		},
+
   		usernameInput(el){
   			// console.log(el.path['0'].value);
   			this.username = el.path['0'].value;

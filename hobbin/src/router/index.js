@@ -30,6 +30,7 @@ export default new Router({
     },
     {
     	path : '/like',
+        name : 'like',
     	component : Like
     },
     {
@@ -50,6 +51,7 @@ export default new Router({
     },
     {
     	path : '/login',
+        name : 'login',
     	component : Login
     },
     {

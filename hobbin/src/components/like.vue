@@ -9,14 +9,28 @@
 </template>
 
 <script>
+
+import like from '../like.js'
+
 export default {
 
   name: 'like',
 
   data () {
     return {
-
+    	like : []
     };
+  },
+
+  mounted () {
+  		console.log(111);
+  		like.$on('like',(add)=>{
+  			console.log(222);
+  			// console.log(add);
+  			this.like = add;
+  		})
+  		console.log(this.like);
+
   }
 };
 </script>
