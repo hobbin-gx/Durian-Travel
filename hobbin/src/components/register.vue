@@ -1,5 +1,5 @@
 <template>
-	<transition class="myanimation">
+	<transition name="myanimation">
 		<div class="regist">
 			<span class="close" @click="handleLeave">×</span>
 			<img src="../assets/liulian.com.png" alt="">
@@ -53,40 +53,52 @@ export default {
 			var userRegex = /^1[3,4,5,7,8]\d{9}$/;
 			var pwRegex = /^[a-zA-Z][A-Za-z0-9_]{5,16}$/;
 			if(this.username==''){
-					console.log('用户名不能为空');
+					this.unameHelp = '用户名不能为空';
 			}else{
 				if(!userRegex.test(this.username)){
 					
-					console.log("请输入正确的11位电话号")	;	
+					this.unameHelp = "请输入正确的11位电话号";	
 				}else{
 					this.unameHelp = '';
 				}
 			}
 			if(this.password==''){
-				console.log('密码不能为空');
+				this.upwdHelp = '密码不能为空';
 			}else{
 				if(!pwRegex.test(this.password)){
-					console.log('清输入一个首字母为英文的6-17位的密码');
+					this.upwdHelp = '清输入一个首字母为英文的6-17位的密码';
 				}else{
 					this.upwdHelp = '';
 				}
 			}
 
-				axios.post("/api/register",{
-					username:this.username,
-					password:this.password
-				}).then(res=>{console.log(res); 
-					if(this.unameHelp==''&&this.upwdHelp==''){
+				// axios.post("/api/register",{
+				// 	username:this.username,
+				// 	password:this.password
+				// }).then(res=>{console.log(res); 
+				// 	if(this.unameHelp==''&&this.upwdHelp==''){
 							
-							if(res.data===false){
-								alert("用户已存在")
-							}else{
-								router.push('/login');
-							}
-						}
-					}).catch(error=>{console.log(error);
-				})
+				// 			if(res.data===false){
+				// 				alert("用户已存在")
+				// 			}else{
+				// 				router.push('/login');
+				// 			}
+				// 		}
+				// 	}).catch(error=>{console.log(error);
+				// })
 			
+			if(this.unameHelp == '' && this.upwdHelp == ''){
+				axios.post('api/register',{
+					username : this.username,
+					password : this.password
+				}).then(res=>{
+					if(res.data === false){
+						alert('用户名存在');
+					}else{
+						router.push('/login');
+					}
+				}).catch(error=>{console.log(error)})
+			}
 
 		}
 
@@ -99,6 +111,27 @@ export default {
 	html,body{
 		height:100%;
 	}
+
+	.myanimation-enter-active{
+       animation: trans .600s 1 ;
+    }
+
+    .myanimation-leave-active{
+    	animation: trans .600s 1 reverse;
+    }
+
+    @keyframes trans {
+    	from{
+          transform :translateY(100%);
+          opacity: 0;
+    	}
+
+    	to{
+   			transform :translateY(0);
+   			opacity: 1;
+    	}
+    }
+
 	.regist{
 		position: fixed;
 		z-index:101;

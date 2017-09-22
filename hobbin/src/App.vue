@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <underbar></underbar>
-    <login v-model='isShow'></login>
     <router-view></router-view>
   </div>
 </template>
@@ -9,7 +8,6 @@
 <script>
 
 import underbar from '@/components/underbar';
-import login from '@/components/login';
 
 export default {
   name: 'app',
@@ -18,13 +16,11 @@ export default {
 
   data (){
     return {
-      isShow : false
     }
   },
 
   components : {
-    underbar,
-    login
+    underbar
   }
 }
 </script>

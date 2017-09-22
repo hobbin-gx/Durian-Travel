@@ -1,6 +1,6 @@
 <template>
 	<transition name="myanimation">
-		<div class="login" v-show="value">
+		<div class="login">
 			<span class="close" @click="handleClick">×</span>
 			<img src="../assets/liulian.com.png" alt="">
 			<p><span>手机</span><input type="text" v-on:input="usernameInput"/></p>
@@ -20,7 +20,6 @@ export default {
 
   name: 'login',
 
-  props : ['value'],
 
   data () {
     return {
@@ -36,7 +35,7 @@ export default {
   methods : {
 
   		handleClick(){
-  			this.$emit('input',false);
+  			router.push('aim');
   		},
 
   		usernameInput(el){
@@ -64,19 +63,17 @@ export default {
 			}
 		}
 		if(this.password==''){
-			alert({
-					upwdHelp: "密码不能为空"
-				})
+			this.upwdHelp = "密码不能为空";
 		}else{
 			if(!pwRegex.test(this.password)){
-				alert({
-					upwdHelp: "请输入一个首字母为英文的6-17位的密码"
-				})
+				this.upwdHelp =  "请输入一个首字母为英文的6-17位的密码";
 			}else{
 				this.upwdHelp = '';
 
 			}
 		}
+
+
 		axios.post("/api/login",{
 			name:this.username,
 			password:this.password
@@ -94,6 +91,17 @@ export default {
 					}
 				}
 			)
+
+			if(this.unameHelp == '' && this.upwdHelp == ''){
+
+				axios.post('api/login',{
+					username : this.username,
+					password : this.password
+				}).then(res=>{
+					router.go(-1);
+				}).catch(error=>{console.log(error)})
+			}
+
 		}
   	},
 

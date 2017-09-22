@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Aim from '@/components/aim'
 import Like from '@/components/like'
 import Trip from '@/components/trip'
@@ -18,11 +17,7 @@ Vue.use(Router)
 export default new Router({
   mode : 'hash',
   routes: [
-    {
-      path: '/home',
-      name: 'aim',
-      component: Aim
-    },
+
     {
     	path : '/aim',
         name : 'aim',

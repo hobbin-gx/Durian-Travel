@@ -4,12 +4,25 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import store from './vuex';
+
 Vue.config.productionTip = false
+
+Vue.prototype.isLogin = function () {
+	var islogin = sessionStorage.getItem('name');
+	// alert(islogin);
+	if(islogin === null){
+		// alert('sb');
+		router.push('/login');
+	}
+	
+}
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

@@ -4,7 +4,7 @@
 			<span>
 				<img src="../assets/favicon.jpg" alt="">
 			</span>
-			<b>LL18842659299</b>
+			<b>{{username}}</b>
 		</div>
 		<div class="content">
 			<div class="pag">
@@ -50,12 +50,13 @@ export default {
 
   data () {
     return {
-
+    	username : ''
     };
   },
 
   mounted (){
-  	this.$emit('input',false);
+  	this.isLogin();
+  		this.username = sessionStorage.getItem('name');
   }
 };
 </script>

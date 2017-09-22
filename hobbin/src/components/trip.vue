@@ -34,6 +34,10 @@ export default {
   	}
   },
 
+  mounted () {
+  	this.isLogin();
+  },
+
   components : {
   	'historytrip' : HistoryTrip
   }
