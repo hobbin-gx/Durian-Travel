@@ -3,7 +3,7 @@
 		<h2>喜欢</h2>
 		<ul class="empty" v-show = "num">
 		<!-- <p>{{love}}</p> -->
-			<li v-for="i in love">
+			<li v-for="i in love" @click = 'handleInto'>
 				<img :src="i.title_page" alt="">
 				<p>{{i.title}}</p>
 				<p>
@@ -21,6 +21,7 @@
 <script>
 
 import like from '../like.js'
+import router from '../router'
 
 export default {
 
@@ -30,6 +31,12 @@ export default {
     return {
     	num : 0,
     };
+  },
+
+  methods : {
+  	handleInto(){
+  		router.push('/details');
+  	}
   },
 
   mounted(){
